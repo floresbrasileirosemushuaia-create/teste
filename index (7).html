@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contacto · Agendar entrevista</title>
+  <style>
+    :root{
+      --bg:#f6f8fb; --panel:#ffffff; --ink:#0f172a; --muted:#5b6b80;
+      --primary:#2563eb; --primary-weak:#e7efff; --border:#e2e8f0; --danger:#dc2626;
+      --radius:14px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:var(--bg);color:var(--ink);font-family:ui-sans-serif,system-ui,Inter,Roboto,Arial}
+    .wrap{max-width:880px;margin:0 auto;padding:20px}
+    header{position:sticky;top:0;z-index:3;background:rgba(255,255,255,.8);backdrop-filter:saturate(1.1) blur(6px);border-bottom:1px solid var(--border)}
+    h1{margin:0;font-size:clamp(22px,3.2vw,34px);padding:14px 0}
+    p.lead{color:var(--muted);margin:.25rem 0 1rem}
+    .card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-top:14px;box-shadow:0 10px 24px rgba(2,6,23,.06)}
+    label{display:block;font-size:14px;color:#38485e;margin:.4rem 0 .35rem}
+    input[type="text"], input[type="date"], input[type="time"]{
+      width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--border);background:#fff;color:var(--ink);outline:none
+    }
+    input:focus{border-color:#bdd0ff;box-shadow:0 0 0 3px var(--primary-weak)}
+    .row{display:grid;grid-template-columns:1fr;gap:12px}
+    @media(min-width:680px){ .row.two{grid-template-columns:1fr 1fr} }
+    .options{display:grid;grid-template-columns:1fr;gap:10px;margin-top:6px}
+    @media(min-width:680px){ .options{grid-template-columns:1fr 1fr} }
+    .opt{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--border);background:#fff;border-radius:12px;padding:12px;cursor:pointer}
+    .opt input{margin-top:3px}
+    .opt:hover{border-color:#c8d6ee}
+    .hide{display:none}
+    .help{color:var(--muted);font-size:12px;margin-top:6px}
+    .btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);background:var(--primary);color:#fff;padding:12px 16px;border-radius:12px;cursor:pointer;font-weight:600}
+    .btn:disabled{opacity:.6;cursor:not-allowed}
+    .error{color:var(--danger);font-size:13px;margin-top:6px}
+    .preview{white-space:pre-wrap;background:#f4f7ff;border:1px dashed #cad7f5;border-radius:12px;padding:12px;color:#0b1220}
+    footer{color:var(--muted);text-align:center;padding:18px}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>Agendar entrevista · Contacto</h1>
+      <p class="lead">Completá los datos y generaremos un mensaje directo por WhatsApp.</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card">
+      <div class="row two">
+        <div>
+          <label for="nombre">Su nombre (¹)</label>
+          <input id="nombre" type="text" placeholder="Ej.: Ana Gómez" autocomplete="name" />
+        </div>
+        <div>
+          <label for="empresa">Tu empresa (²)</label>
+          <input id="empresa" type="text" placeholder="Ej.: Patagonia Tours" />
+        </div>
+      </div>
+
+      <label style="margin-top:12px">¿Qué te gustaría hacer?</label>
+      <div class="options" role="radiogroup" aria-label="Opciones de contacto">
+        <label class="opt">
+          <input type="radio" name="opt" id="opt1" value="opt1" checked />
+          <div>
+            <div><strong>Opción 1:</strong> Agendar entrevista (coordinar horario)</div>
+            <div class="help">Se enviará un mensaje para coordinar por WhatsApp.</div>
+          </div>
+        </label>
+
+        <label class="opt">
+          <input type="radio" name="opt" id="opt2" value="opt2" />
+          <div>
+            <div><strong>Opción 2:</strong> Entrevista en el local (con fecha, hora y dirección)</div>
+            <div class="help">Al elegir, completá la fecha/hora y la dirección del encuentro.</div>
+          </div>
+        </label>
+      </div>
+
+      <div id="extra" class="hide">
+        <div class="row two" style="margin-top:12px">
+          <div>
+            <label for="fecha">Fecha (³)</label>
+            <input id="fecha" type="date" />
+          </div>
+          <div>
+            <label for="hora">Hora</label>
+            <input id="hora" type="time" />
+          </div>
+        </div>
+
+        <div style="margin-top:12px">
+          <label for="lugar">Local de la entrevista (⁴)</label>
+          <input id="lugar" type="text" placeholder="Digite su dirección (ej.: San Martín 1234, Ushuaia)" autocomplete="street-address" />
+        </div>
+      </div>
+
+      <div style="margin-top:16px">
+        <button id="send" class="btn">Enviar por WhatsApp</button>
+        <span id="msgError" class="error" style="display:none"></span>
+      </div>
+
+      <div style="margin-top:14px">
+        <label>Vista previa del mensaje</label>
+        <div id="preview" class="preview"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Hecho por Nando · versión simple (sin Google)
+  </footer>
+
+  <script>
+    const PHONE = "5492901533382"; // WhatsApp destino (sin +)
+    const $ = (id)=> document.getElementById(id);
+
+    const nombre = $("nombre");
+    const empresa = $("empresa");
+    const opt1 = $("opt1");
+    const opt2 = $("opt2");
+    const extra = $("extra");
+    const fecha = $("fecha");
+    const hora  = $("hora");
+    const lugar = $("lugar");
+    const send = $("send");
+    const preview = $("preview");
+    const msgError = $("msgError");
+
+    function fmtFechaHora(d, t){
+      if(!d) return "";
+      const [yyyy, mm, dd] = d.split("-");
+      let hh = "", m = "";
+      if(t && t.includes(":")) { [hh, m] = t.split(":"); }
+      if(hh && m) return `${dd}/${mm} a las ${hh}:${m}`;
+      return `${dd}/${mm}`;
+    }
+
+    function buildMessage(){
+      const n = (nombre.value||"").trim();
+      const e = (empresa.value||"").trim();
+      if(!n || !e){ return ""; }
+      if(opt1.checked){
+        return `Hola Nando Flores, soy ${n} hablo desde ${e}, nos gustaría agendar una entrevista a un puesto disponible. Saludos cordiales`;
+      } else {
+        const f = fmtFechaHora(fecha.value, hora.value);
+        const l = (lugar.value||"").trim();
+        if(!f || !l){ return ""; }
+        return `Hola Nando Flores, soy ${n} hablo desde ${e}, nos gustaría agendar una entrevista en el local, fecha y hora: ${f}, dirección: ${l}, a un puesto disponible. Aguardo su contacto
+
+Saludos cordiales`;
+      }
+    }
+
+    function updateUI(){
+      extra.classList.toggle("hide", !opt2.checked);
+      preview.textContent = buildMessage() || "—";
+    }
+
+    document.querySelectorAll('input').forEach(el => {
+      el.addEventListener('input', updateUI);
+      el.addEventListener('change', updateUI);
+    });
+    document.querySelectorAll('input[name="opt"]').forEach(el=> el.addEventListener('change', updateUI));
+
+    // Enviar por WhatsApp
+    send.addEventListener('click', () => {
+      msgError.style.display = "none";
+      const n = nombre.value.trim();
+      const e = empresa.value.trim();
+      if(!n){ msgError.textContent = "Ingresá tu nombre."; msgError.style.display = "inline"; return; }
+      if(!e){ msgError.textContent = "Ingresá el nombre de la empresa."; msgError.style.display = "inline"; return; }
+
+      if(opt2.checked){
+        if(!fecha.value || !hora.value){ msgError.textContent = "Elegí fecha y hora."; msgError.style.display = "inline"; return; }
+        if(!lugar.value.trim()){ msgError.textContent = "Ingresá la dirección del local."; msgError.style.display = "inline"; return; }
+      }
+
+      const msg = buildMessage();
+      const url = `https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`;
+      window.open(url, "_blank");
+    });
+
+    // init
+    updateUI();
+  </script>
+</body>
+</html>
