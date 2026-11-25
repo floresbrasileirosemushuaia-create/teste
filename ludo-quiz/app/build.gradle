@@ -3,11 +3,11 @@ android {
     namespace 'com.ludoquiz.app'
     compileSdk 35
     defaultConfig {
-        applicationId 'com.ludoquiz.app.nova106'
+        applicationId 'com.ludoquiz.app.nova107'
         minSdk 24
         targetSdk 28
-        versionCode 7
-        versionName '1.0.6'
+        versionCode 8
+        versionName '1.0.7'
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
