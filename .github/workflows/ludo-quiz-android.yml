@@ -1,7 +1,7 @@
-name: Ludo Quiz Android APK 1.0.9
+name: Ludo Quiz Android APK 1.0.10
 on:
   push:
-    branches: [build/ludo-quiz-v1.0.9-tabuleiro-fixo]
+    branches: [build/ludo-quiz-v1.0.10-temas-simples]
     paths: ['ludo-quiz/**', '.github/workflows/ludo-quiz-android.yml']
   workflow_dispatch:
 jobs:
@@ -31,14 +31,14 @@ jobs:
           AAPT="$(find "$ANDROID_HOME/build-tools" -maxdepth 2 -type f -name aapt | sort -V | tail -n 1)"
           test -x "$AAPT"
           "$AAPT" dump badging app/build/outputs/apk/debug/app-debug.apk | tee badging.txt
-          grep -q "package: name='com.ludoquiz.app.nova109'" badging.txt
-          grep -q "versionName='1.0.9'" badging.txt
+          grep -q "package: name='com.ludoquiz.app.nova110'" badging.txt
+          grep -q "versionName='1.0.10'" badging.txt
           grep -q "launchable-activity: name='com.ludoquiz.app.MainActivity'" badging.txt
-          for F in index.html effects.js effects.css themes.js themes.css dual.js dual.css diagnostics.js bank.js photo.js capture.js v108.css; do
+          for F in topics.js index.html effects.js effects.css themes.js themes.css dual.js dual.css diagnostics.js bank.js photo.js capture.js v108.css; do
             test "$(unzip -p app/build/outputs/apk/debug/app-debug.apk "assets/$F" | sha256sum | cut -d ' ' -f 1)" = "$(sha256sum "app/src/main/assets/$F" | cut -d ' ' -f 1)"
           done
       - uses: actions/upload-artifact@v4
         with:
-          name: Ludo_Quiz_v1.0.9_Android_SDK_APK
+          name: Ludo_Quiz_v1.0.10_Android_SDK_APK
           path: ludo-quiz/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
