@@ -94,10 +94,10 @@ window.LudoFX=(function(){
   if(!newEl||!previousRect)return;
   if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
   if(typeof newEl.animate!=='function')return;
-  const r=newEl.getBoundingClientRect(),flipped=document.documentElement.classList.contains('facing-reverse');
+  /* O tabuleiro permanece fixo; coordenadas da peca nao mudam com o jogador. */
+  const r=newEl.getBoundingClientRect();
   let dx=previousRect.left+previousRect.width/2-r.left-r.width/2;
   let dy=previousRect.top+previousRect.height/2-r.top-r.height/2;
-  if(flipped){dx=-dx;dy=-dy;}
   try{
    newEl.animate([
     {transform:'translate('+dx+'px,'+dy+'px) scale(1.03)',opacity:'.75',filter:'brightness(1.2)'},
