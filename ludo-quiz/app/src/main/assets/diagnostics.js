@@ -1,14 +1,14 @@
 /* Ludo Quiz v1.0.7: private on-device telemetry, copied only on request. */
 window.LudoDiag=(function(){
  'use strict';
- const VERSION='1.0.7';
+ const VERSION='1.0.8';
  const LOG_KEY='ludo_quiz_diagnostic_events_107';
  let events=[],initialized=false;
  try{const saved=JSON.parse(localStorage.getItem(LOG_KEY)||'[]');if(Array.isArray(saved))events=saved.slice(-200);}catch(e){}
  function snapshot(game){
   if(!game)return null;
   return {turn:game.turn,current:game.current,currentName:game.players?.[game.current]?.name||null,phase:game.phase,rolled:game.rolled,theme:game.theme||'general',facing:game.facing,winner:game.winner,
-    players:(game.players||[]).map(p=>({name:p.name,color:p.color,pieces:[...p.pieces],correct:p.correct,wrong:p.wrong})),
+    players:(game.players||[]).map(p=>({name:p.name,color:p.color,pieces:[...p.pieces],correct:p.correct,wrong:p.wrong,skipsLeft:p.skipsLeft,cardsLeft:p.cardsLeft,hasPhoto:!!p.photo})),
     pendingMove:game.pendingMove||null,lastCapture:game.lastCapture||null,lastQ:[...(game.lastQ||[])]};
  }
  function log(kind,detail){
@@ -37,7 +37,7 @@ window.LudoDiag=(function(){
  }
  function diagnostic(game,question,lang){
   let localSave=null;try{localSave=JSON.parse(localStorage.getItem('ludo_quiz_game_v1')||'null');}catch(e){localSave={error:String(e)};}
-  return JSON.stringify({app:'Ludo Quiz',version:VERSION,created:new Date().toISOString(),device:{userAgent:navigator.userAgent,language:navigator.language,screen:{width:innerWidth,height:innerHeight,pixelRatio:devicePixelRatio},online:navigator.onLine},language:lang,soundEnabled:(()=>{try{return localStorage.getItem('ludo_quiz_fx_sound_v1')!=='off';}catch(e){return null;}})(),theme:game?.theme||null,game:snapshot(game),savedGame:snapshot(localSave),currentQuestion:question?{ix:question.ix,order:question.order,category:question.category,text:question.text,choices:question.choices,selected:question.selected,correct:question.correct,isCorrect:question.isCorrect}:null,events:events.slice(-200)},null,2);
+  return JSON.stringify({app:'Ludo Quiz',version:VERSION,created:new Date().toISOString(),device:{userAgent:navigator.userAgent,language:navigator.language,screen:{width:innerWidth,height:innerHeight,pixelRatio:devicePixelRatio},online:navigator.onLine},language:lang,soundEnabled:(()=>{try{return localStorage.getItem('ludo_quiz_fx_sound_v1')!=='off';}catch(e){return null;}})(),theme:game?.theme||null,game:snapshot(game),savedGame:snapshot(localSave),currentQuestion:question?{ix:question.ix,order:question.order,category:question.category,text:question.text,choices:question.choices,selected:question.selected,correct:question.correct,isCorrect:question.isCorrect,cardValue:question.cardValue||null,eliminated:question.hidden||[]}:null,events:events.slice(-200)},null,2);
  }
  function manualCopy(text,lang){
   const div=document.createElement('div');div.className='diagManual';
