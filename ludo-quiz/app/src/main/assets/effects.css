@@ -17,3 +17,8 @@ html.facing-reverse #app{height:100dvh;overflow-y:auto;overscroll-behavior:conta
 @keyframes fxCorrect{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}
 @keyframes fxWrong{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
 @media(prefers-reduced-motion:reduce){#app,.overlay,.turnOverlay{transition:none!important}.turnContent.fx-handoff,.fx-rolling .diceGlyph{animation:none!important}}
+
+/* Rotated full-screen overlays must not inherit horizontal scroll from decorative glows. */
+.turnOverlay{overflow-x:hidden}
+.turnAmbientA{left:0}
+.turnAmbientB{right:0}
