@@ -1,7 +1,7 @@
 /* Ludo Quiz v1.0.7 - dual-facing, read-only opponent view. */
 #questionOverlay.dualQuestion{display:flex;flex-direction:column;justify-content:stretch;align-items:stretch;gap:0;overflow:hidden;padding:0;background:#11182e}
 #questionOverlay.dualQuestion>.modal{width:100%;max-width:none;height:50dvh;min-height:0;max-height:none;flex:1 1 50%;border-radius:0;padding:12px max(12px,env(safe-area-inset-right)) 18px max(12px,env(safe-area-inset-left));overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;box-shadow:none;border-top:3px solid #8998bc}
-#questionOverlay.dualQuestion .questionMirror{width:100%;height:50dvh;min-height:0;flex:1 1 50%;overflow:hidden;overflow-y:auto;overscroll-behavior:contain;transform:rotate(180deg);background:#17213a;color:#fff;padding:12px max(12px,env(safe-area-inset-left));pointer-events:none;user-select:none;touch-action:none}
+#questionOverlay.dualQuestion .questionMirror{width:100%;height:50dvh;min-height:0;flex:1 1 50%;overflow:hidden;overflow-y:auto;overscroll-behavior:contain;transform:rotate(180deg);background:#17213a;color:#fff;padding:12px max(12px,env(safe-area-inset-left));pointer-events:auto;user-select:none;touch-action:pan-y}
 #questionOverlay .questionTop{margin-bottom:2px}
 #questionOverlay .question{font-size:clamp(16px,3.6vw,23px);line-height:1.16;margin:7px 0 10px;letter-spacing:-.35px}
 #questionOverlay .qcategory,#questionOverlay .qname{font-size:10px;margin-top:0}
