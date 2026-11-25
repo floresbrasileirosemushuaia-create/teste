@@ -4,8 +4,8 @@
 .turnSoundBtn{background:#ffffff1d;border:1px solid #ffffff3e;color:white;border-radius:12px;min-width:43px;min-height:42px;font-size:22px}
 .turnTopButtons{display:flex;align-items:center;gap:7px}
 /* Tabuleiro fixo como no Ludo fisico; somente as telas de pergunta e de turno acompanham o jogador. */
-.overlay,.turnOverlay{transform-origin:center center;transition:transform .58s cubic-bezier(.22,.79,.18,1)}
-html.facing-reverse .overlay,html.facing-reverse .turnOverlay{transform:rotate(180deg)}
+#questionOverlay,.turnOverlay{transform-origin:center center;transition:transform .58s cubic-bezier(.22,.79,.18,1)}
+html.facing-reverse #questionOverlay,html.facing-reverse .turnOverlay{transform:rotate(180deg)}
 .turnContent.fx-handoff{animation:fxEnter .48s ease both}
 @keyframes fxEnter{from{opacity:.60;scale:.91}to{opacity:1;scale:1}}
 #turnDice.fx-rolling .diceGlyph{animation:fxDice .42s ease-in-out infinite}
@@ -15,7 +15,7 @@ html.facing-reverse .overlay,html.facing-reverse .turnOverlay{transform:rotate(1
 .answer.wrong{animation:fxWrong .35s ease}
 @keyframes fxCorrect{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}
 @keyframes fxWrong{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
-@media(prefers-reduced-motion:reduce){.overlay,.turnOverlay{transition:none!important}.turnContent.fx-handoff,.fx-rolling .diceGlyph{animation:none!important}}
+@media(prefers-reduced-motion:reduce){#questionOverlay,.turnOverlay{transition:none!important}.turnContent.fx-handoff,.fx-rolling .diceGlyph{animation:none!important}}
 
 /* Rotated full-screen overlays must not inherit horizontal scroll from decorative glows. */
 .turnOverlay{overflow-x:hidden}
