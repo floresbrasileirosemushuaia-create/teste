@@ -1,7 +1,7 @@
-name: Ludo Quiz Android APK 1.0.3
+name: Ludo Quiz Android APK 1.0.4
 on:
   push:
-    branches: [build/ludo-quiz-v1.0.3]
+    branches: [build/ludo-quiz-v1.0.4-package-fix]
     paths: ['ludo-quiz/**', '.github/workflows/ludo-quiz-android.yml']
   workflow_dispatch:
 jobs:
@@ -28,8 +28,15 @@ jobs:
           test -s app/build/outputs/apk/debug/app-debug.apk
           unzip -t app/build/outputs/apk/debug/app-debug.apk
           sha256sum app/build/outputs/apk/debug/app-debug.apk
+          AAPT="$(find "$ANDROID_HOME/build-tools" -maxdepth 2 -type f -name aapt | sort -V | tail -n 1)"
+          test -x "$AAPT"
+          "$AAPT" dump badging app/build/outputs/apk/debug/app-debug.apk | tee badging.txt
+          grep -q "package: name='com.ludoquiz.app.nova104'" badging.txt
+          grep -q "versionName='1.0.4'" badging.txt
+          grep -q "launchable-activity: name='com.ludoquiz.app.MainActivity'" badging.txt
+          test "$(unzip -p app/build/outputs/apk/debug/app-debug.apk assets/index.html | sha256sum | cut -d ' ' -f 1)" = "$(sha256sum app/src/main/assets/index.html | cut -d ' ' -f 1)"
       - uses: actions/upload-artifact@v4
         with:
-          name: Ludo_Quiz_v1.0.3_Android_SDK_APK
+          name: Ludo_Quiz_v1.0.4_Android_SDK_APK
           path: ludo-quiz/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
