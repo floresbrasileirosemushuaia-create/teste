@@ -1,0 +1,7 @@
+/* Seletor compacto de temas; preserva o tabuleiro e os estilos existentes. */
+.themeGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0 0 4px}
+.themeCard{border:1.5px solid #dce3ef;background:#f6f8fc;border-radius:15px;padding:11px;display:flex;align-items:center;gap:9px;color:#25324e;text-align:left;min-width:0;min-height:75px;transition:transform .13s,border-color .13s,background-color .13s}
+.themeCard.active{border-color:#526ce3;background:#e8edff;box-shadow:inset 0 0 0 1px #526ce3}
+.themeCard:active{transform:scale(.98)}.themeIcon{font-size:23px;flex:0 0 27px;text-align:center}.themeCopy{min-width:0}.themeName{display:block;font-size:13px;font-weight:950}.themeDesc{display:block;font-size:10px;color:#65738e;margin-top:4px;line-height:1.25}.themeSmallHelp{margin:7px 2px 13px;font-size:11px;color:#71809a}
+@media(max-width:355px){.themeCard{padding:8px 7px;gap:6px}.themeIcon{font-size:19px;flex-basis:22px}.themeName{font-size:12px}.themeDesc{font-size:9px}}
+
