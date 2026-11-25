@@ -12,9 +12,9 @@ window.LudoDual=(function(){
   const answers=node('mirrorAnswers');answers.replaceChildren();
   q.choices.forEach((v,i)=>{
    const row=document.createElement('div');row.className='mirrorAnswer';
-   if(answered){if(q.order[i]===2)row.classList.add('correct');else if(i===q.selected)row.classList.add('wrong');}
+   if((q.hidden||[]).includes(i))row.classList.add('removed');if(answered){if(q.order[i]===2)row.classList.add('correct');else if(i===q.selected)row.classList.add('wrong');}
    const letter=document.createElement('span');letter.className='mirrorLetter';letter.textContent='ABCD'[i];
-   const text=document.createElement('span');text.textContent=v;
+   const text=document.createElement('span');text.textContent=(q.hidden||[]).includes(i)?'—':v;
    row.append(letter,text);answers.append(row);
   });
   const result=node('mirrorResult');result.hidden=!answered;
