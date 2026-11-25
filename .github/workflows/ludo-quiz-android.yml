@@ -1,0 +1,36 @@
+name: Ludo Quiz Android APK 1.0.3
+on:
+  push:
+    branches: [build/ludo-quiz-v1.0.3]
+    paths: ['ludo-quiz/**', '.github/workflows/ludo-quiz-android.yml']
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    defaults:
+      run:
+        working-directory: ludo-quiz
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.10.2'
+      - name: Compile debug APK with Android SDK
+        run: gradle --no-daemon --stacktrace assembleDebug
+      - name: Validate final APK
+        run: |
+          test -s app/build/outputs/apk/debug/app-debug.apk
+          unzip -t app/build/outputs/apk/debug/app-debug.apk
+          sha256sum app/build/outputs/apk/debug/app-debug.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Ludo_Quiz_v1.0.3_Android_SDK_APK
+          path: ludo-quiz/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
