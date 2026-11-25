@@ -34,3 +34,7 @@
  #questionOverlay.dualQuestion .answers,#questionOverlay.dualQuestion .mirrorAnswers{grid-template-columns:repeat(2,minmax(0,1fr))}
  #questionOverlay.dualQuestion .answer,#questionOverlay.dualQuestion .mirrorAnswer{min-height:34px}
 }
+
+/* Leitura confortável: cada lado rola separadamente, só a metade ativa responde. */
+#questionOverlay.dualQuestion>.modal .question,#questionOverlay.dualQuestion .mirrorQuestion{overflow-wrap:anywhere}
+@media(orientation:landscape) and (max-height:520px){#questionOverlay .question,.mirrorQuestion{font-size:15px;line-height:1.25}#questionOverlay .answer,.mirrorAnswer{font-size:12px;line-height:1.25;min-height:34px}}
