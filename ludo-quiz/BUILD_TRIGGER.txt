@@ -1,0 +1,1 @@
+Android SDK compilation of Ludo Quiz v1.0.3. Original HTML unchanged. Build is isolated in a dedicated branch.
