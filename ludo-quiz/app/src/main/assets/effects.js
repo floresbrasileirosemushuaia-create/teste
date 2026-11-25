@@ -29,6 +29,8 @@ window.LudoFX=(function(){
   if(kind==='wrong'){tone(320,0,.18,.06,'triangle');tone(220,.18,.25,.055,'triangle');}
   if(kind==='dice'){for(let i=0;i<7;i++)tone(280+i*42,i*.085,.07,.04,'triangle');tone(770,.66,.22,.07);}
   if(kind==='move'){for(let i=0;i<3;i++)tone(290+i*70,i*.075,.085,.035);}
+  if(kind==='card'){tone(550,0,.08,.06);tone(730,.1,.11,.06);tone(900,.21,.18,.065);}
+  if(kind==='devour'){for(let i=0;i<11;i++)tone(920-i*62,i*.07,.13,.065,'sawtooth');tone(150,.7,.5,.095,'triangle');tone(820,.83,.22,.08);}
   if(kind==='capture'){tone(540,0,.10,.07);tone(240,.10,.22,.08,'triangle');tone(700,.24,.20,.05);}
   if(kind==='bonus'){tone(520,0,.10);tone(720,.12,.10);tone(920,.24,.22);}
   if(kind==='win'){[440,554,659,880,1046].forEach((v,i)=>tone(v,i*.13,.31,.055));}
@@ -101,7 +103,7 @@ window.LudoFX=(function(){
     {transform:'translate('+dx+'px,'+dy+'px) scale(1.03)',opacity:'.75',filter:'brightness(1.2)'},
     {transform:'translate(0,0) scale(1.23)',opacity:'1',filter:'brightness(1.3)',offset:.7},
     {transform:'translate(0,0) scale(1)',opacity:'1',filter:'none'}
-   ],{duration:690,easing:'cubic-bezier(.2,.8,.2,1)'});
+   ],{duration:1850,easing:'cubic-bezier(.2,.8,.2,1)'});
    if(captured)newEl.animate([{boxShadow:'0 0 0 0px #fff'},{boxShadow:'0 0 0 9px #fff0'}],{duration:650,easing:'ease-out'});
   }catch(e){}
  }
