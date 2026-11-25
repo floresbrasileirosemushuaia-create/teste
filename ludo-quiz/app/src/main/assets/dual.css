@@ -1,0 +1,36 @@
+/* Ludo Quiz v1.0.7 - dual-facing, read-only opponent view. */
+#questionOverlay.dualQuestion{display:flex;flex-direction:column;justify-content:stretch;align-items:stretch;gap:0;overflow:hidden;padding:0;background:#11182e}
+#questionOverlay.dualQuestion>.modal{width:100%;max-width:none;height:50dvh;min-height:0;max-height:none;flex:1 1 50%;border-radius:0;padding:12px max(12px,env(safe-area-inset-right)) 18px max(12px,env(safe-area-inset-left));overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;box-shadow:none;border-top:3px solid #8998bc}
+#questionOverlay.dualQuestion .questionMirror{width:100%;height:50dvh;min-height:0;flex:1 1 50%;overflow:hidden;overflow-y:auto;overscroll-behavior:contain;transform:rotate(180deg);background:#17213a;color:#fff;padding:12px max(12px,env(safe-area-inset-left));pointer-events:none;user-select:none;touch-action:none}
+#questionOverlay .questionTop{margin-bottom:2px}
+#questionOverlay .question{font-size:clamp(16px,3.6vw,23px);line-height:1.16;margin:7px 0 10px;letter-spacing:-.35px}
+#questionOverlay .qcategory,#questionOverlay .qname{font-size:10px;margin-top:0}
+#questionOverlay .answers{gap:6px}
+#questionOverlay .answer{font-size:clamp(12px,2.6vw,15px);min-height:39px;padding:6px 9px;gap:8px;border-radius:10px;line-height:1.2}
+#questionOverlay .answer .letter{width:25px;height:25px;flex:none}
+#questionOverlay .result{font-size:11px;padding:7px 9px;margin:8px 0}
+#questionOverlay .modalBtn{min-height:36px;margin-top:9px;padding:7px}
+.mirrorHeader{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:4px}
+.mirrorTag{background:#263655;color:#b9d8ff;border:1px solid #496291;border-radius:8px;font-size:10px;font-weight:900;padding:4px 7px;letter-spacing:.4px}
+.mirrorWho{font-size:11px;font-weight:900;color:#dbe7ff;text-overflow:ellipsis;overflow:hidden;white-space:nowrap}
+.mirrorCategory{font-size:10px;color:#9fb6ee;letter-spacing:1px;text-transform:uppercase;font-weight:900}
+.mirrorQuestion{font-weight:950;line-height:1.2;font-size:clamp(15px,3.7vw,22px);margin:5px 0 9px}
+.mirrorAnswers{display:grid;gap:5px}
+.mirrorAnswer{display:flex;align-items:center;gap:7px;min-height:29px;background:#273656;border:1px solid #3c506e;border-radius:9px;padding:5px 7px;font-weight:700;font-size:clamp(11px,2.6vw,14px);line-height:1.25}
+.mirrorLetter{font-weight:950;display:grid;place-items:center;width:22px;min-width:22px;height:22px;background:#3d527b;border-radius:6px}
+.mirrorAnswer.correct{background:#134e3c;border-color:#33c589}
+.mirrorAnswer.wrong{background:#6b273c;border-color:#fa7882}
+.mirrorResult{border:1px solid #47658f;border-radius:9px;background:#263c59;padding:7px;margin-top:8px;color:#fff;font-size:12px;font-weight:800}
+#questionOverlay.dualQuestion>.modal .questionLang{padding:4px 7px;font-size:10px}
+.diagControls{margin:12px 0 0;display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}.diagControls .secondary,.diagSetup .secondary{font-size:11px;padding:8px 10px;border-radius:10px}.diagSetup{margin-top:10px;text-align:center}#diagStatus{font-size:11px;font-weight:750;color:#526783}
+.turnCaptureMsg{max-width:470px;margin:12px auto 0;background:#ffffff1e;border:1px solid #ffffff65;padding:11px 12px;border-radius:12px;color:#fff;font-size:clamp(12px,3vw,16px);font-weight:850;line-height:1.35}
+.diagManual{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;background:#0b122ddc;padding:12px}.diagManualInner{width:min(100%,600px);max-height:90dvh;background:#fff;border-radius:16px;display:flex;flex-direction:column;gap:9px;padding:16px}.diagManual textarea{height:55dvh;min-height:150px;overflow:auto;font-size:11px;font-family:monospace;width:100%}.diagManual .primary{padding:10px}
+@media (orientation:landscape) and (max-height:520px){#questionOverlay.dualQuestion .questionMirror,#questionOverlay.dualQuestion>.modal{padding:5px 12px}#questionOverlay .question,.mirrorQuestion{font-size:13px;margin:2px 0 4px}#questionOverlay .answer,.mirrorAnswer{min-height:27px;padding:3px 6px;font-size:11px}#questionOverlay .answers,.mirrorAnswers{gap:3px}#questionOverlay .answer .letter,.mirrorLetter{width:19px;height:19px;min-width:19px}#questionOverlay .qcategory,#questionOverlay .qname,.mirrorCategory,.mirrorWho{font-size:9px}}
+/* Keep the opponent's question closer to their own edge when there is spare room. */
+#questionOverlay.dualQuestion .questionMirror{display:flex;flex-direction:column}
+#questionOverlay.dualQuestion .questionMirror .mirrorHeader{margin-top:auto;flex-shrink:0}
+#questionOverlay.dualQuestion .questionMirror .mirrorCategory,#questionOverlay.dualQuestion .questionMirror .mirrorQuestion,#questionOverlay.dualQuestion .questionMirror .mirrorAnswers{flex-shrink:0}
+@media(orientation:landscape) and (max-height:520px){
+ #questionOverlay.dualQuestion .answers,#questionOverlay.dualQuestion .mirrorAnswers{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #questionOverlay.dualQuestion .answer,#questionOverlay.dualQuestion .mirrorAnswer{min-height:34px}
+}
