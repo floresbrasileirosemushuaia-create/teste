@@ -5,3 +5,8 @@
 .themeCard:active{transform:scale(.98)}.themeIcon{font-size:23px;flex:0 0 27px;text-align:center}.themeCopy{min-width:0}.themeName{display:block;font-size:13px;font-weight:950}.themeDesc{display:block;font-size:10px;color:#65738e;margin-top:4px;line-height:1.25}.themeSmallHelp{margin:7px 2px 13px;font-size:11px;color:#71809a}
 @media(max-width:355px){.themeCard{padding:8px 7px;gap:6px}.themeIcon{font-size:19px;flex-basis:22px}.themeName{font-size:12px}.themeDesc{font-size:9px}}
 
+
+/* Seleção múltipla sem novos controles globais. */
+.themeCard.active{position:relative;padding-right:25px}
+.themeCard.active::after{content:"✓";position:absolute;right:8px;top:9px;font-size:13px;font-weight:1000;color:#3853bd}
+#themeChoices .themeCard{min-height:70px}
